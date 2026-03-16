@@ -46,6 +46,8 @@ print("--- 시스템 가동 ---")
 print("Space: Record/Preview 모드 전환")
 print("P: 일시정지/재개, ESC: 프로그램 종료")
 
+out_recorder = cv.VideoWriter("Play_Video_" + datetime.datetime.now().strftime("%Y-%m-%d_%H-%M-%S") + ".avi", fourcc, 120.0, (width, height))
+
 while True:
     valid, frame = video.read()
     if not valid:
@@ -53,6 +55,7 @@ while True:
 
     # 화면에 표시할 복사본 생성 (원본은 깨끗하게 녹화하기 위함)
     display_frame = frame.copy()
+    out_recorder.write(display_frame)
 
     if is_explained_list is not [True, True, True]:
         if not is_explained_list[0]:
@@ -156,6 +159,8 @@ while True:
         break
 
 # 자원 해제
+if out_recorder is not None:
+    out_recorder.release()
 if out is not None:
     out.release()
 video.release()
