@@ -18,9 +18,11 @@ fourcc = cv.VideoWriter_fourcc(*'XVID') # AVI 저장을 위한 코덱
 is_recording = False
 is_paused = False
 out = None
+show_time = None
 
 print("--- 시스템 가동 ---")
 print("Space: Record/Preview 모드 전환")
+print("P: 일시정지/재개")
 print("ESC: 프로그램 종료")
 
 while True:
@@ -40,17 +42,25 @@ while True:
         # [필수 기능] Record 모드 시 화면에 표시 (빨간색 원 및 텍스트)
         cv.circle(display_frame, (40, 40), 15, (0, 0, 255), -1)
         cv.putText(display_frame, "RECORDING", (70, 55), 
+                   cv.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 0), 3) # 텍스트에 테두리 효과 추가
+        cv.putText(display_frame, "RECORDING", (70, 55), 
                    cv.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
-    elif is_paused:
+    elif is_paused and is_recording:
         # 일시정지 모드 시 표시 (노란색 원 및 텍스트)
         cv.circle(display_frame, (40, 40), 15, (0, 255, 255), -1)
         cv.putText(display_frame, "PAUSED", (70, 55), 
+                   cv.FONT_HERSHEY_SIMPLEX, 1, (255, 0, 0), 3) # 텍스트에 테두리 효과 추가
+        cv.putText(display_frame, "PAUSED", (70, 55), 
                    cv.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 255), 2)
+        
     else:
         # Preview 모드 시 표시
-        cv.putText(display_frame, "PREVIEW", (20, 55), 
+        cv.rectangle(display_frame, (25, 25), (55, 55), (255, 255, 255), -1)
+        cv.putText(display_frame, "PREVIEW", (70, 55),
+                     cv.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 0), 3) # 텍스트에 테두리 효과 추가
+        cv.putText(display_frame, "PREVIEW", (70, 55), 
                    cv.FONT_HERSHEY_SIMPLEX, 1, (255, 255, 255), 2)
-
+        
     # 3. 화면에 현재 카메라 영상 표시
     cv.imshow('Camera System', display_frame)
 
@@ -71,14 +81,16 @@ while True:
             if out is not None:
                 out.release()
                 out = None
+            is_paused = False
             print("녹화 중지 및 저장 완료")
     
     elif key == ord('p'):
-        is_paused = not is_paused
-        if is_paused:
-            print("녹화 일시정지")
-        else:            
-            print("녹화 재개")
+        if is_recording:
+            is_paused = not is_paused
+            if is_paused:
+                print("녹화 일시정지")
+            else:            
+                print("녹화 재개")
 
     # [필수 기능] ESC 키로 종료 (ASCII code 27)
     elif key == 27:
