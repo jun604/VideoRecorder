@@ -16,6 +16,7 @@ height = int(video.get(cv.CAP_PROP_FRAME_HEIGHT))
 fourcc = cv.VideoWriter_fourcc(*'XVID') # AVI 저장을 위한 코덱
 
 is_recording = False
+is_paused = False
 out = None
 
 print("--- 시스템 가동 ---")
@@ -31,7 +32,7 @@ while True:
     display_frame = frame.copy()
 
     # 2. 모드에 따른 로직 처리
-    if is_recording:
+    if is_recording and not is_paused:
         # 녹화 중일 때: 파일에 프레임 쓰기
         if out is not None:
             out.write(frame)
@@ -40,6 +41,11 @@ while True:
         cv.circle(display_frame, (40, 40), 15, (0, 0, 255), -1)
         cv.putText(display_frame, "RECORDING", (70, 55), 
                    cv.FONT_HERSHEY_SIMPLEX, 1, (0, 0, 255), 2)
+    elif is_paused:
+        # 일시정지 모드 시 표시 (노란색 원 및 텍스트)
+        cv.circle(display_frame, (40, 40), 15, (0, 255, 255), -1)
+        cv.putText(display_frame, "PAUSED", (70, 55), 
+                   cv.FONT_HERSHEY_SIMPLEX, 1, (0, 255, 255), 2)
     else:
         # Preview 모드 시 표시
         cv.putText(display_frame, "PREVIEW", (20, 55), 
@@ -66,6 +72,13 @@ while True:
                 out.release()
                 out = None
             print("녹화 중지 및 저장 완료")
+    
+    elif key == ord('p'):
+        is_paused = not is_paused
+        if is_paused:
+            print("녹화 일시정지")
+        else:            
+            print("녹화 재개")
 
     # [필수 기능] ESC 키로 종료 (ASCII code 27)
     elif key == 27:
