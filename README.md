@@ -1,5 +1,8 @@
 # Video Recorder
-OpenCV를 이용하여 영상을 녹화하는 Video Recorder
+OpenCV를 이용하여 영상을 녹화하는 Video Recorder</br>
+Video Recorder 사용 영상 또한 녹화</br>
+세가지 모드 구현</br>
+현재 상태를 화면에 표시
 ## 기능
 1. 화면에 현재 카메라 영상 표시
    - 본 recorder는 "충청남도 천안시 동남구 신부동 433-4"에 위치한 천안로사거리 cctv를 사용
