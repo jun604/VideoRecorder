@@ -26,3 +26,9 @@ Video Recorder 사용 영상 또한 녹화</br>
    - Record 모드 시작 : "Recording Start" '2'초간 출력
    - Pause 모드 시작 : Pause 모드 종료 전까지 "Recording Stopped" 출력
    - 다른 모드에서 Preview 모드로 전환 시 : "Recording ended" '2'초간 출력
+## 영상 파일 설명
+- "Play_Video_2026-03-17_13-18-01" : 모든 설명을 보고 녹화를 진행 했을 경우
+  + "record_20260317_131808" : Preview > Record > Pause > Record > Preview 모드 순서대로 녹화 진행
+- "Play_Video_2026-03-17_13-19-13" : 조작 방법 설명 무시하고 녹화 진행
+  + "record_20260317_131915" : Pause 모드에서 녹화 종료
+  + "record_20260317_131927" : "Recording Start" 설명 출력 중 녹화 종료
